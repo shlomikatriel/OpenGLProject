@@ -23,11 +23,11 @@ D:\myOpenGL\myOpenGL\obj\Debug\myOpenGL.Properties.Resources.resources
 D:\myOpenGL\myOpenGL\obj\Debug\myOpenGL.csproj.GenerateResource.Cache
 E:\Google Drive\Ruppin\Year 4\Semester 2\Graphics\Ex1\myOpenGL\myOpenGL\obj\Debug\myOpenGL.exe
 E:\Google Drive\Ruppin\Year 4\Semester 2\Graphics\Ex1\myOpenGL\myOpenGL\obj\Debug\myOpenGL.pdb
-E:\Projects\OpenGLProject\myOpenGL\myOpenGL\obj\Debug\myOpenGL.exe
 E:\Projects\OpenGLProject\myOpenGL\myOpenGL\obj\Debug\myOpenGL.pdb
-E:\Projects\OpenGLProject\myOpenGL\myOpenGL\bin\Debug\myOpenGL.exe
 E:\Projects\OpenGLProject\myOpenGL\myOpenGL\bin\Debug\myOpenGL.pdb
 E:\Projects\OpenGLProject\myOpenGL\myOpenGL\obj\Debug\myOpenGL.csprojResolveAssemblyReference.cache
-E:\Projects\OpenGLProject\myOpenGL\myOpenGL\obj\Debug\myOpenGL.Form1.resources
 E:\Projects\OpenGLProject\myOpenGL\myOpenGL\obj\Debug\myOpenGL.Properties.Resources.resources
 E:\Projects\OpenGLProject\myOpenGL\myOpenGL\obj\Debug\myOpenGL.csproj.GenerateResource.Cache
+E:\Projects\OpenGLProject\myOpenGL\myOpenGL\obj\Debug\myOpenGL.mainWindow.resources
+E:\Projects\OpenGLProject\myOpenGL\myOpenGL\bin\Debug\myOpenGL.exe
+E:\Projects\OpenGLProject\myOpenGL\myOpenGL\obj\Debug\myOpenGL.exe
