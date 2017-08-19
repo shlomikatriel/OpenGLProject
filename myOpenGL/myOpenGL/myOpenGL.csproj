@@ -6,7 +6,7 @@
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{D118B639-8BF0-4AB3-B64D-254EE7731890}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>myOpenGL</RootNamespace>
     <AssemblyName>myOpenGL</AssemblyName>
@@ -85,16 +85,25 @@
     <Compile Include="WGL.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\sea.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\wall.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\horizon.jpg" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Resources\land.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\sea.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\wall.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\whitewall.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\window.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lightbeam.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

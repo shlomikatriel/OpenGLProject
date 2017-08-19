@@ -1,0 +1,7 @@
+E:\Projects\OpenGLProject\myOpenGL\myOpenGL\obj\Release\myOpenGL.MainWindow.resources
+E:\Projects\OpenGLProject\myOpenGL\myOpenGL\obj\Release\myOpenGL.Properties.Resources.resources
+E:\Projects\OpenGLProject\myOpenGL\myOpenGL\obj\Release\myOpenGL.csproj.GenerateResource.Cache
+E:\Projects\OpenGLProject\myOpenGL\myOpenGL\bin\Release\myOpenGL.exe
+E:\Projects\OpenGLProject\myOpenGL\myOpenGL\bin\Release\myOpenGL.pdb
+E:\Projects\OpenGLProject\myOpenGL\myOpenGL\obj\Release\myOpenGL.exe
+E:\Projects\OpenGLProject\myOpenGL\myOpenGL\obj\Release\myOpenGL.pdb

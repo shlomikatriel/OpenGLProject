@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace myOpenGL.BL
@@ -8,7 +9,14 @@ namespace myOpenGL.BL
     {
         public static void Write(string s)
         {
-            Console.WriteLine(DateTime.Now + ":\n" + s);
+            StackTrace st = new StackTrace(true);
+            string method = "<NO METHOD>", type = "<NO CLASS>";
+            if (st.FrameCount > 1)
+            {
+                method = st.GetFrame(1).GetMethod().Name;
+                type = st.GetFrame(1).GetMethod().ReflectedType.Name;
+            }
+            Console.WriteLine(DateTime.Now + " - " + type + " - " + method + ":\n" + s);
         }
     }
 }

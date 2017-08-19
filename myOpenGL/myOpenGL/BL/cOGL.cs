@@ -29,8 +29,6 @@ namespace OpenGL
             InitializeGL();
         }
 
-
-
         public void Draw()
         {
             // MAIN FUNCTION
@@ -40,19 +38,20 @@ namespace OpenGL
                 return;
             }
 
-            GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
+            // GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
+            GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT | GL.GL_STENCIL_BUFFER_BIT);
 
             GL.glLoadIdentity();
 
             GL.glTranslatef(0.0f, 0.0f, -6.0f);
+
             GL.glRotatef(90.0f - GlobalProperties.CurrentVerticalViewAngle, -1.0f, 0.0f, 0.0f);
             GL.glRotatef(GlobalProperties.CurrentHorizontalViewAngle, 0.0f, 0.0f, 1.0f);
 
+            // GL.glEnable(GL.GL_LIGHTING);
             DrawAxes();
-            DrawSea();
-            DrawIsland();
-            DrawTower();
-
+            DrawAll();
+            // GL.glDisable(GL.GL_LIGHTING);
 
             GL.glFlush();
 
@@ -60,21 +59,96 @@ namespace OpenGL
 
         }
 
-        private void DrawSea()
+        private void DrawBackground()
         {
             GL.glEnable(GL.GL_TEXTURE_2D);
             GL.glColor3f(1.0f, 1.0f, 1.0f);
+
+            GL.glBindTexture(GL.GL_TEXTURE_2D, Textures[4]);
+
+            float cor = GlobalProperties.seaSize / 2;
+
+            GLUquadric obj = GLU.gluNewQuadric();
+            GLU.gluQuadricTexture(obj, 4);
+            GLU.gluCylinder(obj, cor, cor, cor, 32, 32);
+            GLU.gluDeleteQuadric(obj);
+
+            GL.glDisable(GL.GL_TEXTURE_2D);
+
+        }
+        private void DrawReflected()
+        {
+            DrawBackground();
+            DrawIsland();
+            DrawTower();
+        }
+
+        private void DrawAll()
+        {
+            GL.glEnable(GL.GL_BLEND);
+            GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
+
+
+            //only floor, draw only to STENCIL buffer
+            GL.glEnable(GL.GL_STENCIL_TEST);
+            GL.glStencilOp(GL.GL_REPLACE, GL.GL_REPLACE, GL.GL_REPLACE);
+            GL.glStencilFunc(GL.GL_ALWAYS, 1, 0xFFFFFFFF); // draw floor always
+            GL.glColorMask((byte)GL.GL_FALSE, (byte)GL.GL_FALSE, (byte)GL.GL_FALSE, (byte)GL.GL_FALSE);
+            GL.glDisable(GL.GL_DEPTH_TEST);
+
+            // DrawSea();
+
+            // restore regular settings
+            GL.glColorMask((byte)GL.GL_TRUE, (byte)GL.GL_TRUE, (byte)GL.GL_TRUE, (byte)GL.GL_TRUE);
+            GL.glEnable(GL.GL_DEPTH_TEST);
+
+            // reflection is drawn only where STENCIL buffer value equal to 1
+            GL.glStencilFunc(GL.GL_EQUAL, 1, 0xFFFFFFFF);
+            GL.glStencilOp(GL.GL_KEEP, GL.GL_KEEP, GL.GL_KEEP);
+
+            GL.glEnable(GL.GL_STENCIL_TEST);
+
+            // draw reflected scene
+            GL.glPushMatrix();
+            GL.glEnable(GL.GL_CULL_FACE);
+            GL.glScalef(1, 1, -1); //swap on Z axis
+            GL.glCullFace(GL.GL_FRONT);
+            DrawReflected();
+            GL.glCullFace(GL.GL_BACK);
+            DrawReflected();
+            GL.glDisable(GL.GL_CULL_FACE);
+            GL.glPopMatrix();
+
+            // really draw floor 
+            //( half-transparent ( see its color's alpha byte)))
+            // in order to see reflected objects 
+            GL.glDepthMask((byte)GL.GL_FALSE);
+            DrawSea();
+            GL.glDepthMask((byte)GL.GL_TRUE);
+            // Disable GL.GL_STENCIL_TEST to show All, else it will be cut on GL.GL_STENCIL
+            GL.glDisable(GL.GL_STENCIL_TEST);
+
+            DrawReflected();
+        }
+
+        private void DrawSea()
+        {
+            float dup = GlobalProperties.seaDuplicates;
+
+            GL.glEnable(GL.GL_TEXTURE_2D);
+            GL.glColor4f(1.0f, 1.0f, 1.0f, 0.6f);
+
             GL.glBindTexture(GL.GL_TEXTURE_2D, Textures[0]);
             GL.glBegin(GL.GL_QUADS);
 
             float cor = GlobalProperties.seaSize / 2;
             GL.glTexCoord2f(0, 0);
             GL.glVertex3f(-cor, -cor, 0.0f);
-            GL.glTexCoord2f(0, 5);
+            GL.glTexCoord2f(0, dup);
             GL.glVertex3f(cor, -cor, 0.0f);
-            GL.glTexCoord2f(5, 5);
+            GL.glTexCoord2f(dup, dup);
             GL.glVertex3f(cor, cor, 0.0f);
-            GL.glTexCoord2f(5, 0);
+            GL.glTexCoord2f(dup, 0);
             GL.glVertex3f(-cor, cor, 0.0f);
 
             GL.glEnd();
@@ -83,29 +157,61 @@ namespace OpenGL
 
         private void DrawIsland()
         {
-            float moveSphere = 6.2f;
+            float moveSphere = GlobalProperties.islandRadius - GlobalProperties.islandHeight;
+            float rotate = 45.0f;
+
+            GL.glEnable(GL.GL_CLIP_PLANE0);
+            double[] clipPalane0 = { 0.0, 0.0, 1.0, 0.0 };
+            GL.glClipPlane(GL.GL_CLIP_PLANE0, clipPalane0);
+
             GL.glTranslatef(0.0f, 0.0f, -moveSphere);
+
 
             GL.glEnable(GL.GL_TEXTURE_2D);
             GL.glColor3f(1.0f, 1.0f, 1.0f);
             GL.glBindTexture(GL.GL_TEXTURE_2D, Textures[1]);
 
+
+            GL.glRotatef(rotate, 1.0f, 1.0f, 0.0f);
             GLUquadric obj = GLU.gluNewQuadric();
             GLU.gluQuadricTexture(obj, 1);
-            GLU.gluSphere(obj, 6.5, 16, 16);
-
+            GLU.gluSphere(obj, GlobalProperties.islandRadius, 32, 32);
             GLU.gluDeleteQuadric(obj);
+            GL.glRotatef(-rotate, 1.0f, 1.0f, 0.0f);
+
             GL.glDisable(GL.GL_TEXTURE_2D);
+
             GL.glTranslatef(0.0f, 0.0f, moveSphere);
+
+            GL.glDisable(GL.GL_CLIP_PLANE0);
         }
 
         private void DrawTower()
         {
-            const double baseRadius = 0.25, topRadius = 0.16, height = 1.8, diskHeight = 0.06;
+            const double baseRadius = 0.25, topRadius = 0.16, height = 2.3, diskHeight = 0.06;
+            const double diskRadius = topRadius + 0.2;
+            float lightBeamLength = GlobalProperties.LightBeamLength;
+
+            GL.glPushMatrix();
+
             DrawPillar(baseRadius, topRadius, height);
+
             GL.glTranslatef(0.0f, 0.0f, (float)height);
-            DrawDisk(diskHeight, topRadius + 0.12);
+
+            DrawDisk(diskHeight, diskRadius);
+
             GL.glTranslatef(0.0f, 0.0f, (float)diskHeight);
+
+            DrawWindow();
+
+            GL.glTranslatef(0.0f, 0.0f, -(float)diskHeight / 2);
+            GL.glRotatef(GlobalProperties.LightBeamHorizontalAngle, 0.0f, 0.0f, 1.0f);
+            GL.glRotatef(GlobalProperties.LightBeamVerticalAngle, 0.0f, 1.0f, 0.0f);
+            if (GlobalProperties.LightBeamOn)
+                DrawLightBeam();
+
+
+            GL.glPopMatrix();
         }
 
         private void DrawPillar(double baseRadius, double topRadius, double height)
@@ -117,8 +223,8 @@ namespace OpenGL
             GLUquadric obj = GLU.gluNewQuadric();
             GLU.gluQuadricTexture(obj, 2);
             GLU.gluCylinder(obj, baseRadius, topRadius, height, 32, 32);
-
             GLU.gluDeleteQuadric(obj);
+
             GL.glDisable(GL.GL_TEXTURE_2D);
         }
 
@@ -128,16 +234,58 @@ namespace OpenGL
             GL.glColor3f(1.0f, 1.0f, 1.0f);
             GL.glBindTexture(GL.GL_TEXTURE_2D, Textures[3]);
 
+            GL.glPushMatrix();
+
             GLUquadric obj = GLU.gluNewQuadric();
             GLU.gluQuadricTexture(obj, 3);
             GLU.gluDisk(obj, 0, diskRadius, 60, 20);
             GLU.gluCylinder(obj, diskRadius, diskRadius, diskHeight, 32, 32);
             GL.glTranslatef(0.0f, 0.0f, (float)diskHeight);
             GLU.gluDisk(obj, 0, diskRadius, 60, 20);
-            GL.glTranslatef(0.0f, 0.0f, -(float)diskHeight);
+            GL.glPopMatrix();
+            // GL.glTranslatef(0.0f, 0.0f, -(float)diskHeight);
 
             GLU.gluDeleteQuadric(obj);
+
             GL.glDisable(GL.GL_TEXTURE_2D);
+        }
+
+        private void DrawWindow()
+        {
+            float windowRadius = GlobalProperties.windowRadius,
+                wondowHeight = GlobalProperties.windowHeight;
+
+            GL.glEnable(GL.GL_TEXTURE_2D);
+            GL.glColor3f(1.0f, 1.0f, 1.0f);
+            GL.glBindTexture(GL.GL_TEXTURE_2D, Textures[5]);
+
+            GLUquadric obj = GLU.gluNewQuadric();
+            GLU.gluQuadricTexture(obj, 5);
+            GLU.gluCylinder(obj, windowRadius, windowRadius, wondowHeight, 32, 32);
+            GL.glTranslatef(0.0f, 0.0f, wondowHeight);
+            GLU.gluCylinder(obj, windowRadius, 0, wondowHeight * 2 / 3, 32, 32);
+            GL.glTranslatef(0.0f, 0.0f, -wondowHeight / 2);
+
+            GLU.gluDeleteQuadric(obj);
+
+            GL.glDisable(GL.GL_TEXTURE_2D);
+        }
+
+        private void DrawLightBeam()
+        {
+            float length = GlobalProperties.LightBeamLength;
+            // GL.glEnable(GL.GL_TEXTURE_2D);
+            Color c = GlobalProperties.LightBeamColor;
+            GL.glColor4ub(c.R, c.G, c.B, (byte)GlobalProperties.LightBeamIntesity);
+            // GL.glColor3f(1.0f, 1.0f, 1.0f);
+            // GL.glBindTexture(GL.GL_TEXTURE_2D, Textures[6]);
+
+            GLUquadric obj = GLU.gluNewQuadric();
+            GLU.gluQuadricTexture(obj, 6);
+            GLU.gluCylinder(obj, 0.05, length * 0.05, length, 32, 32);
+            GLU.gluDeleteQuadric(obj);
+
+            // GL.glDisable(GL.GL_TEXTURE_2D);
         }
 
         private void DrawAxes()
@@ -228,6 +376,14 @@ namespace OpenGL
                 return;
             if (this.Width == 0 || this.Height == 0)
                 return;
+            GL.glShadeModel(GL.GL_SMOOTH);
+            GL.glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
+            GL.glClearDepth(1.0f);
+
+            //GL.glEnable(GL.GL_LIGHT0);
+            //GL.glEnable(GL.GL_COLOR_MATERIAL);
+            //GL.glColorMaterial(GL.GL_FRONT_AND_BACK, GL.GL_AMBIENT_AND_DIFFUSE);
+
             GL.glEnable(GL.GL_DEPTH_TEST);
             GL.glDepthFunc(GL.GL_LEQUAL);
 
@@ -235,9 +391,11 @@ namespace OpenGL
             GL.glClearColor(0, 0, 0, 0);
             GL.glMatrixMode(GL.GL_PROJECTION);
             GL.glLoadIdentity();
-            GLU.gluPerspective(45.0, ((double)Width) / Height, 1.0, 1000.0);
+
+            GLU.gluPerspective(90.0, ((double)Width) / Height, 1.0, 1000.0);
             GL.glMatrixMode(GL.GL_MODELVIEW);
             GL.glLoadIdentity();
+
 
             GenerateTextures();
         }
@@ -250,7 +408,10 @@ namespace OpenGL
                                   myOpenGL.Properties.Resources.sea,
                                   myOpenGL.Properties.Resources.land,
                                   myOpenGL.Properties.Resources.wall,
-                                  myOpenGL.Properties.Resources.whitewall
+                                  myOpenGL.Properties.Resources.whitewall,
+                                  myOpenGL.Properties.Resources.horizon,
+                                  myOpenGL.Properties.Resources.window,
+                                  myOpenGL.Properties.Resources.lightbeam
                               };
             Textures = new uint[images.Length];
             GL.glGenTextures(images.Length, Textures);
