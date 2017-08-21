@@ -48,10 +48,10 @@ namespace OpenGL
             GL.glRotatef(90.0f - GlobalProperties.CurrentVerticalViewAngle, -1.0f, 0.0f, 0.0f);
             GL.glRotatef(GlobalProperties.CurrentHorizontalViewAngle, 0.0f, 0.0f, 1.0f);
 
-            // GL.glEnable(GL.GL_LIGHTING);
+            GL.glEnable(GL.GL_LIGHTING);
             DrawAxes();
             DrawAll();
-            // GL.glDisable(GL.GL_LIGHTING);
+            GL.glDisable(GL.GL_LIGHTING);
 
             GL.glFlush();
 
@@ -96,7 +96,7 @@ namespace OpenGL
             GL.glColorMask((byte)GL.GL_FALSE, (byte)GL.GL_FALSE, (byte)GL.GL_FALSE, (byte)GL.GL_FALSE);
             GL.glDisable(GL.GL_DEPTH_TEST);
 
-            // DrawSea();
+            DrawSea();
 
             // restore regular settings
             GL.glColorMask((byte)GL.GL_TRUE, (byte)GL.GL_TRUE, (byte)GL.GL_TRUE, (byte)GL.GL_TRUE);
@@ -208,8 +208,10 @@ namespace OpenGL
             GL.glRotatef(GlobalProperties.LightBeamHorizontalAngle, 0.0f, 0.0f, 1.0f);
             GL.glRotatef(GlobalProperties.LightBeamVerticalAngle, 0.0f, 1.0f, 0.0f);
             if (GlobalProperties.LightBeamOn)
+            {
                 DrawLightBeam();
-
+                DrawLightSource();
+            }
 
             GL.glPopMatrix();
         }
@@ -274,18 +276,30 @@ namespace OpenGL
         private void DrawLightBeam()
         {
             float length = GlobalProperties.LightBeamLength;
-            // GL.glEnable(GL.GL_TEXTURE_2D);
             Color c = GlobalProperties.LightBeamColor;
             GL.glColor4ub(c.R, c.G, c.B, (byte)GlobalProperties.LightBeamIntesity);
-            // GL.glColor3f(1.0f, 1.0f, 1.0f);
-            // GL.glBindTexture(GL.GL_TEXTURE_2D, Textures[6]);
+
+            GL.glEnable(GL.GL_DEPTH_TEST);
+            GL.glEnable(GL.GL_LIGHTING);
+            GL.glHint(GL.GL_PERSPECTIVE_CORRECTION_Hint, GL.GL_NICEST);
+            GL.glShadeModel(GL.GL_SMOOTH);
+            GL.glEnable(GL.GL_LIGHT0);
 
             GLUquadric obj = GLU.gluNewQuadric();
-            GLU.gluQuadricTexture(obj, 6);
             GLU.gluCylinder(obj, 0.05, length * 0.05, length, 32, 32);
             GLU.gluDeleteQuadric(obj);
+        }
 
-            // GL.glDisable(GL.GL_TEXTURE_2D);
+        private void DrawLightSource()
+        {
+            float distance = 0.8f;
+            float[] pos = { 0, 0, distance };
+            float[] intensity = { 1, 1, 1, 1 };
+            GL.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, pos);
+            GL.glLightfv(GL.GL_LIGHT0, GL.GL_SPECULAR, intensity);
+            float[] diff = { 0.6f, 0.6f, 0.75f };
+            GL.glLightfv(GL.GL_LIGHT1, GL.GL_DIFFUSE, diff);
+
         }
 
         private void DrawAxes()
@@ -380,9 +394,9 @@ namespace OpenGL
             GL.glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
             GL.glClearDepth(1.0f);
 
-            //GL.glEnable(GL.GL_LIGHT0);
-            //GL.glEnable(GL.GL_COLOR_MATERIAL);
-            //GL.glColorMaterial(GL.GL_FRONT_AND_BACK, GL.GL_AMBIENT_AND_DIFFUSE);
+            GL.glEnable(GL.GL_LIGHT0);
+            GL.glEnable(GL.GL_COLOR_MATERIAL);
+            GL.glColorMaterial(GL.GL_FRONT_AND_BACK, GL.GL_AMBIENT_AND_DIFFUSE);
 
             GL.glEnable(GL.GL_DEPTH_TEST);
             GL.glDepthFunc(GL.GL_LEQUAL);
