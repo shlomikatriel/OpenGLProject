@@ -61,8 +61,9 @@ namespace OpenGL
 
         private void DrawBackground()
         {
+            GL.glDisable(GL.GL_LIGHTING);
             GL.glEnable(GL.GL_TEXTURE_2D);
-            GL.glColor3f(1.0f, 1.0f, 1.0f);
+            GL.glColor4f(1.0f, 1.0f, 1.0f,0.5f);
 
             GL.glBindTexture(GL.GL_TEXTURE_2D, Textures[4]);
 
@@ -74,7 +75,7 @@ namespace OpenGL
             GLU.gluDeleteQuadric(obj);
 
             GL.glDisable(GL.GL_TEXTURE_2D);
-
+            GL.glEnable(GL.GL_LIGHTING);
         }
         private void DrawReflected()
         {
@@ -133,10 +134,11 @@ namespace OpenGL
 
         private void DrawSea()
         {
+            GL.glDisable(GL.GL_LIGHTING);
             float dup = GlobalProperties.seaDuplicates;
 
             GL.glEnable(GL.GL_TEXTURE_2D);
-            GL.glColor4f(1.0f, 1.0f, 1.0f, 0.6f);
+            GL.glColor4f(1.0f, 1.0f, 1.0f, 0.3f);
 
             GL.glBindTexture(GL.GL_TEXTURE_2D, Textures[0]);
             GL.glBegin(GL.GL_QUADS);
@@ -153,6 +155,7 @@ namespace OpenGL
 
             GL.glEnd();
             GL.glDisable(GL.GL_TEXTURE_2D);
+            GL.glEnable(GL.GL_LIGHTING);
         }
 
         private void DrawIsland()
@@ -277,10 +280,10 @@ namespace OpenGL
         {
             float length = GlobalProperties.LightBeamLength;
             Color c = GlobalProperties.LightBeamColor;
+            
             GL.glColor4ub(c.R, c.G, c.B, (byte)GlobalProperties.LightBeamIntesity);
 
             GL.glEnable(GL.GL_DEPTH_TEST);
-            GL.glEnable(GL.GL_LIGHTING);
             GL.glHint(GL.GL_PERSPECTIVE_CORRECTION_Hint, GL.GL_NICEST);
             GL.glShadeModel(GL.GL_SMOOTH);
             GL.glEnable(GL.GL_LIGHT0);
@@ -288,6 +291,7 @@ namespace OpenGL
             GLUquadric obj = GLU.gluNewQuadric();
             GLU.gluCylinder(obj, 0.05, length * 0.05, length, 32, 32);
             GLU.gluDeleteQuadric(obj);
+
         }
 
         private void DrawLightSource()
@@ -298,7 +302,7 @@ namespace OpenGL
             GL.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, pos);
             GL.glLightfv(GL.GL_LIGHT0, GL.GL_SPECULAR, intensity);
             float[] diff = { 0.6f, 0.6f, 0.75f };
-            GL.glLightfv(GL.GL_LIGHT1, GL.GL_DIFFUSE, diff);
+            GL.glLightfv(GL.GL_LIGHT0, GL.GL_DIFFUSE, diff);
 
         }
 
