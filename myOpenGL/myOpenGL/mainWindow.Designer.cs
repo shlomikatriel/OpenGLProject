@@ -36,6 +36,7 @@ namespace myOpenGL
             this.chkAnimate = new System.Windows.Forms.CheckBox();
             this.sbVerticalViewAngle = new System.Windows.Forms.HScrollBar();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
+            this.chkSoundON = new System.Windows.Forms.CheckBox();
             this.gbLightControl = new System.Windows.Forms.GroupBox();
             this.rbBlue = new System.Windows.Forms.RadioButton();
             this.rbRed = new System.Windows.Forms.RadioButton();
@@ -46,7 +47,6 @@ namespace myOpenGL
             this.lblLightIntensity = new System.Windows.Forms.Label();
             this.chkLightOn = new System.Windows.Forms.CheckBox();
             this.lblVerticalViewAngle = new System.Windows.Forms.Label();
-            this.chkSoundON = new System.Windows.Forms.CheckBox();
             this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.Panel2.SuspendLayout();
             this.splitContainer.SuspendLayout();
@@ -82,9 +82,9 @@ namespace myOpenGL
             this.lblInterval.Location = new System.Drawing.Point(10, 10);
             this.lblInterval.Margin = new System.Windows.Forms.Padding(10, 10, 10, 0);
             this.lblInterval.Name = "lblInterval";
-            this.lblInterval.Size = new System.Drawing.Size(82, 13);
+            this.lblInterval.Size = new System.Drawing.Size(85, 13);
             this.lblInterval.TabIndex = 5;
-            this.lblInterval.Text = "Refresh Interval";
+            this.lblInterval.Text = "Refresh Interval:";
             this.lblInterval.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel
@@ -117,7 +117,7 @@ namespace myOpenGL
             // 
             this.sbVerticalViewAngle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.sbVerticalViewAngle.Location = new System.Drawing.Point(10, 661);
+            this.sbVerticalViewAngle.Location = new System.Drawing.Point(13, 337);
             this.sbVerticalViewAngle.Margin = new System.Windows.Forms.Padding(10, 0, 10, 10);
             this.sbVerticalViewAngle.Name = "sbVerticalViewAngle";
             this.sbVerticalViewAngle.Size = new System.Drawing.Size(192, 20);
@@ -149,6 +149,17 @@ namespace myOpenGL
             this.splitContainer.Size = new System.Drawing.Size(1032, 691);
             this.splitContainer.SplitterDistance = 816;
             this.splitContainer.TabIndex = 9;
+            // 
+            // chkSoundON
+            // 
+            this.chkSoundON.AutoSize = true;
+            this.chkSoundON.Location = new System.Drawing.Point(90, 63);
+            this.chkSoundON.Name = "chkSoundON";
+            this.chkSoundON.Size = new System.Drawing.Size(57, 17);
+            this.chkSoundON.TabIndex = 11;
+            this.chkSoundON.Text = "Sound";
+            this.chkSoundON.UseVisualStyleBackColor = true;
+            this.chkSoundON.CheckedChanged += new System.EventHandler(this.chkSoundON_CheckedChanged);
             // 
             // gbLightControl
             // 
@@ -261,23 +272,12 @@ namespace myOpenGL
             this.lblVerticalViewAngle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblVerticalViewAngle.AutoSize = true;
-            this.lblVerticalViewAngle.Location = new System.Drawing.Point(51, 638);
+            this.lblVerticalViewAngle.Location = new System.Drawing.Point(13, 314);
             this.lblVerticalViewAngle.Margin = new System.Windows.Forms.Padding(10, 0, 10, 10);
             this.lblVerticalViewAngle.Name = "lblVerticalViewAngle";
-            this.lblVerticalViewAngle.Size = new System.Drawing.Size(98, 13);
+            this.lblVerticalViewAngle.Size = new System.Drawing.Size(101, 13);
             this.lblVerticalViewAngle.TabIndex = 9;
-            this.lblVerticalViewAngle.Text = "Vertical View Angle";
-            // 
-            // chkSoundON
-            // 
-            this.chkSoundON.AutoSize = true;
-            this.chkSoundON.Location = new System.Drawing.Point(90, 63);
-            this.chkSoundON.Name = "chkSoundON";
-            this.chkSoundON.Size = new System.Drawing.Size(57, 17);
-            this.chkSoundON.TabIndex = 11;
-            this.chkSoundON.Text = "Sound";
-            this.chkSoundON.UseVisualStyleBackColor = true;
-            this.chkSoundON.CheckedChanged += new System.EventHandler(this.chkSoundON_CheckedChanged);
+            this.lblVerticalViewAngle.Text = "Vertical View Angle:";
             // 
             // MainWindow
             // 

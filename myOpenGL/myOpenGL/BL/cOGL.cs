@@ -49,7 +49,12 @@ namespace OpenGL
             GL.glRotatef(GlobalProperties.CurrentHorizontalViewAngle, 0.0f, 0.0f, 1.0f);
 
             GL.glEnable(GL.GL_LIGHTING);
-            DrawAxes();
+            if (GlobalProperties.LightBeamOn)
+                GL.glEnable(GL.GL_LIGHT0);
+            else
+                GL.glDisable(GL.GL_LIGHT0);
+
+            // DrawAxes();
             DrawAll();
             GL.glDisable(GL.GL_LIGHTING);
 
@@ -63,7 +68,7 @@ namespace OpenGL
         {
             GL.glDisable(GL.GL_LIGHTING);
             GL.glEnable(GL.GL_TEXTURE_2D);
-            GL.glColor4f(1.0f, 1.0f, 1.0f,0.5f);
+            GL.glColor4f(1.0f, 1.0f, 1.0f, 0.5f);
 
             GL.glBindTexture(GL.GL_TEXTURE_2D, Textures[4]);
 
@@ -280,13 +285,13 @@ namespace OpenGL
         {
             float length = GlobalProperties.LightBeamLength;
             Color c = GlobalProperties.LightBeamColor;
-            
+
             GL.glColor4ub(c.R, c.G, c.B, (byte)GlobalProperties.LightBeamIntesity);
 
-            GL.glEnable(GL.GL_DEPTH_TEST);
-            GL.glHint(GL.GL_PERSPECTIVE_CORRECTION_Hint, GL.GL_NICEST);
-            GL.glShadeModel(GL.GL_SMOOTH);
-            GL.glEnable(GL.GL_LIGHT0);
+            //GL.glEnable(GL.GL_DEPTH_TEST);
+            //GL.glHint(GL.GL_PERSPECTIVE_CORRECTION_Hint, GL.GL_NICEST);
+            //GL.glShadeModel(GL.GL_SMOOTH);
+            //GL.glEnable(GL.GL_LIGHT0);
 
             GLUquadric obj = GLU.gluNewQuadric();
             GLU.gluCylinder(obj, 0.05, length * 0.05, length, 32, 32);
@@ -398,7 +403,8 @@ namespace OpenGL
             GL.glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
             GL.glClearDepth(1.0f);
 
-            GL.glEnable(GL.GL_LIGHT0);
+            if (GlobalProperties.LightBeamOn)
+                GL.glEnable(GL.GL_LIGHT0);
             GL.glEnable(GL.GL_COLOR_MATERIAL);
             GL.glColorMaterial(GL.GL_FRONT_AND_BACK, GL.GL_AMBIENT_AND_DIFFUSE);
 
