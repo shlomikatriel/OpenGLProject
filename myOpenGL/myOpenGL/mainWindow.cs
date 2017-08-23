@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using OpenGL;
 using System.Runtime.InteropServices;
 using myOpenGL.BL;
+using System.Media;
 
 namespace myOpenGL
 {
@@ -157,6 +158,19 @@ namespace myOpenGL
                     break;
             }
             cGL.Draw();
+        }
+
+        private void chkSoundON_CheckedChanged(object sender, EventArgs e)
+        {
+            bool on = (sender as CheckBox).Checked;
+            System.Media.SoundPlayer audio = new SoundPlayer(myOpenGL.Properties.Resources.Ocean_Wave);
+
+            if (on)
+            {
+                audio.Play();
+            }
+            else
+                audio.Stop();
         }
     }
 

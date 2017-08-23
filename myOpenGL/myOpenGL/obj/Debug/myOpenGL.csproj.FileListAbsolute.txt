@@ -31,3 +31,11 @@ E:\Projects\OpenGLProject\myOpenGL\myOpenGL\obj\Debug\myOpenGL.csproj.GenerateRe
 E:\Projects\OpenGLProject\myOpenGL\myOpenGL\obj\Debug\myOpenGL.mainWindow.resources
 E:\Projects\OpenGLProject\myOpenGL\myOpenGL\bin\Debug\myOpenGL.exe
 E:\Projects\OpenGLProject\myOpenGL\myOpenGL\obj\Debug\myOpenGL.exe
+C:\Users\USER\Desktop\myOpenGL\myOpenGL\obj\Debug\myOpenGL.exe
+C:\Users\USER\Desktop\myOpenGL\myOpenGL\obj\Debug\myOpenGL.pdb
+C:\Users\USER\Desktop\myOpenGL\myOpenGL\bin\Debug\myOpenGL.exe
+C:\Users\USER\Desktop\myOpenGL\myOpenGL\bin\Debug\myOpenGL.pdb
+C:\Users\USER\Desktop\myOpenGL\myOpenGL\obj\Debug\myOpenGL.csprojResolveAssemblyReference.cache
+C:\Users\USER\Desktop\myOpenGL\myOpenGL\obj\Debug\myOpenGL.MainWindow.resources
+C:\Users\USER\Desktop\myOpenGL\myOpenGL\obj\Debug\myOpenGL.Properties.Resources.resources
+C:\Users\USER\Desktop\myOpenGL\myOpenGL\obj\Debug\myOpenGL.csproj.GenerateResource.Cache

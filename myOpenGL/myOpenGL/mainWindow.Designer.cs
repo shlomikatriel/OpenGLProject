@@ -46,6 +46,7 @@ namespace myOpenGL
             this.lblLightIntensity = new System.Windows.Forms.Label();
             this.chkLightOn = new System.Windows.Forms.CheckBox();
             this.lblVerticalViewAngle = new System.Windows.Forms.Label();
+            this.chkSoundON = new System.Windows.Forms.CheckBox();
             this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.Panel2.SuspendLayout();
             this.splitContainer.SuspendLayout();
@@ -137,6 +138,7 @@ namespace myOpenGL
             // 
             // splitContainer.Panel2
             // 
+            this.splitContainer.Panel2.Controls.Add(this.chkSoundON);
             this.splitContainer.Panel2.Controls.Add(this.gbLightControl);
             this.splitContainer.Panel2.Controls.Add(this.lblVerticalViewAngle);
             this.splitContainer.Panel2.Controls.Add(this.sbVerticalViewAngle);
@@ -205,10 +207,10 @@ namespace myOpenGL
             this.rbYellow.Checked = true;
             this.rbYellow.Location = new System.Drawing.Point(9, 107);
             this.rbYellow.Name = "rbYellow";
-            this.rbYellow.Size = new System.Drawing.Size(48, 17);
+            this.rbYellow.Size = new System.Drawing.Size(56, 17);
             this.rbYellow.TabIndex = 3;
             this.rbYellow.TabStop = true;
-            this.rbYellow.Text = "Yello";
+            this.rbYellow.Text = "Yellow";
             this.rbYellow.UseVisualStyleBackColor = true;
             this.rbYellow.CheckedChanged += new System.EventHandler(this.rb_CheckedChanged);
             // 
@@ -248,9 +250,9 @@ namespace myOpenGL
             this.chkLightOn.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkLightOn.Location = new System.Drawing.Point(6, 19);
             this.chkLightOn.Name = "chkLightOn";
-            this.chkLightOn.Size = new System.Drawing.Size(85, 17);
+            this.chkLightOn.Size = new System.Drawing.Size(49, 17);
             this.chkLightOn.TabIndex = 0;
-            this.chkLightOn.Text = "Light On/Off";
+            this.chkLightOn.Text = "Light";
             this.chkLightOn.UseVisualStyleBackColor = true;
             this.chkLightOn.CheckedChanged += new System.EventHandler(this.chkLightOn_CheckedChanged);
             // 
@@ -265,6 +267,17 @@ namespace myOpenGL
             this.lblVerticalViewAngle.Size = new System.Drawing.Size(98, 13);
             this.lblVerticalViewAngle.TabIndex = 9;
             this.lblVerticalViewAngle.Text = "Vertical View Angle";
+            // 
+            // chkSoundON
+            // 
+            this.chkSoundON.AutoSize = true;
+            this.chkSoundON.Location = new System.Drawing.Point(90, 63);
+            this.chkSoundON.Name = "chkSoundON";
+            this.chkSoundON.Size = new System.Drawing.Size(57, 17);
+            this.chkSoundON.TabIndex = 11;
+            this.chkSoundON.Text = "Sound";
+            this.chkSoundON.UseVisualStyleBackColor = true;
+            this.chkSoundON.CheckedChanged += new System.EventHandler(this.chkSoundON_CheckedChanged);
             // 
             // MainWindow
             // 
@@ -307,6 +320,7 @@ namespace myOpenGL
         private System.Windows.Forms.RadioButton rbGreen;
         private System.Windows.Forms.RadioButton rbYellow;
         private System.Windows.Forms.Label lblLightColor;
+        private System.Windows.Forms.CheckBox chkSoundON;
     }
 }
 
